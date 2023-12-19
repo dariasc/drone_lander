@@ -12,11 +12,7 @@ Luego, como nuestro proyecto depende de **Aruco**, clonamos esta dependencia ([a
 git clone https://github.com/pal-robotics/aruco_ros.git && cd aruco_ros
 git checkout noetic-devel && cd ../
 git clone https://github.com/dariasc/drone_lander.git
-```
-Por último, creamos la carpeta "include" necesaria para poder compilar el proyecto, y volvemos construir el espacio de trabajo.
-
-```bash
-mkdir -p drone_lander/lander/include && cd ../ && catkin_make
+cd ../ && catkin_make
 ```
 
 # Configuración
