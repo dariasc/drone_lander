@@ -47,7 +47,6 @@ class LanderNode(object):
             if self.state == 'FLYING':
                 if self.aruco_seen >= ARUCO_SEEN_THRESHOLD:
                     self.state = 'LANDING'  # Change state
-                continue  # Continue flying without any specific actions
             elif self.state == 'LANDING':
                 if self.z < DISARM_Z_THRESHOLD:
                     # Disarm the drone if the altitude is below the threshold
@@ -61,13 +60,21 @@ class LanderNode(object):
                     twist.linear.z = 0
                     twist.angular.z = 0
                     self.twist_pub.publish(twist)
-                    break  # Break out of the loop and stop publishing twist commands
+
+                    self.state = 'LANDED'
                 else:
                     pose = Pose()
                     pose.position.x = 0
                     pose.position.y = 0
                     pose.position.z = -LANDING_Z_SPEED
                     self.pose_pub.publish(pose)
+
+                    twist = Twist()
+                    twist.linear.x = 0
+                    twist.linear.y = 0
+                    twist.linear.z = 0
+                    twist.angular.z = 0
+                    self.twist_pub.publish(twist)
 
             r.sleep()
 
